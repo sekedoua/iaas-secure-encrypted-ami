@@ -3,11 +3,11 @@ import os
 import sys
 import logging
 from botocore.exceptions import ClientError # type: ignore
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 import time
 
 # Load environment variables from .env file
-load_dotenv()
+#load_dotenv()
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s: %(message)s")
