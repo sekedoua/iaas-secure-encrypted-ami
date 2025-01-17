@@ -1,27 +1,26 @@
-# Secure AMI Creation and Deployment
+# Création et déploiement sécurisés d'AMI
 
-This repository contains the necessary code and workflows to automate the creation of a secure, encrypted Amazon Machine Image (AMI) and deploy it as an EC2 instance. The process ensures that the AMI and instance follow AWS security best practices by using encryption and controlled access.
-
----
-
-## **Features**
-- **Encrypted AMI Creation:** Automates the creation of an AMI with encryption using AWS KMS.
-- **GitHub Actions Workflow:** Provides a pre-configured GitHub Actions workflow to manage and validate AMI creation and instance deployment.
-- **Security Best Practices:**
-  - Configures security groups with restricted access.
-  - Ensures encrypted root volumes for EC2 instances.
-- **Customizable Inputs:** Supports user-defined configurations such as instance type, base AMI ID, and security group.
+Ce référentiel contient le code et les workflows nécessaires pour automatiser la création d'une image machine Amazon (AMI) sécurisée et chiffrée et la déployer en tant qu'instance EC2. Le processus garantit que l'AMI et l'instance respectent les meilleures pratiques de sécurité AWS en utilisant le chiffrement et l'accès contrôlé.
 
 ---
 
-## **Directory Structure**
+## **Fonctionnalités**
+- **Création d'AMI chiffrée :** automatise la création d'une AMI avec chiffrement à l'aide d'AWS KMS.
+- **Flux de travail GitHub Actions :** fournit un flux de travail GitHub Actions préconfiguré pour gérer et valider la création d'AMI et le déploiement d'instances.
+- **Bonnes pratiques de sécurité :**
+- Configure les groupes de sécurité avec un accès restreint.
+- Garantit des volumes racines chiffrés pour les instances EC2.
+- **Entrées personnalisables :** prend en charge les configurations définies par l'utilisateur telles que le type d'instance, l'ID AMI de base et le groupe de sécurité.
+
+---
+
+## ** Structure du dossier  projet **
 ```plaintext
 .
 ├── .github/
 │   └── workflows/
-│       └── secure_ami.yml  # GitHub Actions workflow for Secure AMI creation
-├── requirements.txt         # Python dependencies for the project
+│       └── secure_ami.yml   # Flux de travail GitHub Actions pour la création d'AMI sécurisée
+├── requirements.txt         # Dépendances Python pour le projet
 ├── secure_ami.py            # Python script to create and validate a secure AMI
-├── .gitignore               # Files to ignore in version control
-├── README.md                # Project documentation
-
+├── .gitignore               # Fichiers à ignorer dans le contrôle de version
+├── README.md                
