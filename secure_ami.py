@@ -1,4 +1,4 @@
-#pip install for :
+#pip install for this lib :
 import boto3 # type: ignore
 import os
 import sys
