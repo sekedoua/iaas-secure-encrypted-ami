@@ -1,0 +1,140 @@
+name: Secure Encrypted AMI Creation and Validation
+
+on:
+  workflow_dispatch:
+    inputs:
+      region:
+        description: "AWS Region"
+        required: true
+      instance_type:
+        description: "Instance Type"
+        required: true
+      base_ami_id:
+        description: "Base AMI ID"
+        required: true
+      key_pair:
+        description: "Key Pair Name"
+        required: true
+      security_group:
+        description: "Security Group Name"
+        required: true
+      my_ip:
+        description: "My Public IP"
+        required: true
+
+jobs:
+  create-ami:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: pip install boto3
+
+      # Step 4: Run Secure AMI Creation Script
+      - name: Create Secure Encrypted AMI
+        env:
+          AWS_REGION: ${{ inputs.region }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          INSTANCE_TYPE: ${{ inputs.instance_type }}
+          BASE_AMI_ID: ${{ inputs.base_ami_id }}
+          KEY_PAIR_NAME: ${{ inputs.key_pair }}
+          SECURITY_GROUP_NAME: ${{ inputs.security_group }}
+          MY_PUBLIC_IP: ${{ inputs.my_ip }}
+        run: |
+          echo "🚀 Starting Secure AMI Creation Workflow!"
+          python secure_ami.py
+
+      # Step 5: Wait for AMI Availability
+      - name: Wait for AMI Availability
+        env:
+          AWS_REGION: ${{ inputs.region }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          AMI_ID=$(aws ec2 describe-images \
+            --filters "Name=name,Values=SecureAMI" \
+            --query "Images[0].ImageId" \
+            --region ${{ inputs.region }} \
+            --output text)
+
+          if [[ -z "$AMI_ID" ]]; then
+            echo "❌ AMI creation failed. Exiting."
+            exit 1
+          fi
+
+          echo "⏳ Waiting for AMI ($AMI_ID) to become available..."
+          for i in {1..20}; do
+            AMI_STATE=$(aws ec2 describe-images \
+              --image-ids $AMI_ID \
+              --query "Images[0].State" \
+              --region ${{ inputs.region }} \
+              --output text)
+
+            echo "AMI State: $AMI_STATE"
+            if [[ "$AMI_STATE" == "available" ]]; then
+              echo "✅ AMI $AMI_ID is now available!"
+              break
+            fi
+
+            if [[ $i -eq 20 ]]; then
+              echo "❌ AMI did not become available within the expected time."
+              exit 1
+            fi
+
+            sleep 20
+          done
+
+      # Step 6: Check AMI Sharing
+      - name: Verify AMI Sharing
+        env:
+          AWS_REGION: ${{ inputs.region }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          AMI_ID=$(aws ec2 describe-images \
+            --filters "Name=name,Values=SecureAMI" \
+            --query "Images[0].ImageId" \
+            --region ${{ inputs.region }} \
+            --output text)
+
+          if [[ -z "$AMI_ID" ]]; then
+            echo "❌ AMI not found. Exiting."
+            exit 1
+          fi
+
+          echo "🔍 Checking sharing permissions for AMI: $AMI_ID"
+          SHARED_ACCOUNTS=$(aws ec2 describe-image-attribute \
+            --image-id $AMI_ID \
+            --attribute launchPermission \
+            --query "LaunchPermissions[*].UserId" \
+            --region ${{ inputs.region }} \
+            --output text)
+
+          if [[ -z "$SHARED_ACCOUNTS" ]]; then
+            echo "✅ AMI $AMI_ID is not shared with any accounts."
+          else
+            echo "❗ AMI $AMI_ID is shared with the following accounts:"
+            echo "$SHARED_ACCOUNTS"
+          fi
+
+      # Step 7: Final Output of the Workflow
+      - name: 🎉 Confirm Workflow Completion
+        run: |
+          echo "🎉 Secure Encrypted AMI Workflow completed successfully! 🚀"
+          
+
+
+
+
