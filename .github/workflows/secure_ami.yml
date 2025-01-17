@@ -39,7 +39,7 @@ jobs:
 
       # Step 3: Install dependencies
       - name: Install dependencies
-        run: pip install boto3
+        run: pip install boto3 python-dotenv paramiko cryptography
 
       # Step 4: Run Secure AMI Creation Script
       - name: Create Secure Encrypted AMI
