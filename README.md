@@ -1,7 +1,10 @@
 # Création et déploiement sécurisés d'AMI
-
+![Succes](img/main_diagram.PNG)
 Ce référentiel contient le code et les workflows nécessaires pour automatiser la création d'une image machine Amazon (AMI) sécurisée et chiffrée et la déployer en tant qu'instance EC2. Le processus garantit que l'AMI et l'instance respectent les meilleures pratiques de sécurité AWS en utilisant le chiffrement et l'accès contrôlé.
-
+![Succes](img/Capture.PNG)
+![Succes](img/Capture3.PNG)
+![Succes](img/Capture6.PNG)
+![Succes](img/Capture7.PNG)
 ---
 
 ## **Fonctionnalités**
@@ -11,7 +14,13 @@ Ce référentiel contient le code et les workflows nécessaires pour automatiser
 - Configure les groupes de sécurité avec un accès restreint.
 - Garantit des volumes racines chiffrés pour les instances EC2.
 - **Entrées personnalisables :** prend en charge les configurations définies par l'utilisateur telles que le type d'instance, l'ID AMI de base et le groupe de sécurité.
+![Succes](img/Capture1.PNG)
 
+![Succes](img/Capture2.PNG)
+
+![Succes](img/Capture3.PNG)
+
+![Succes](img/Capture4.PNG)
 ---
 
 ## ** Structure du dossier  projet **
@@ -24,3 +33,4 @@ Ce référentiel contient le code et les workflows nécessaires pour automatiser
 ├── secure_ami.py            # Python script to create and validate a secure AMI
 ├── .gitignore               # Fichiers à ignorer dans le contrôle de version
 ├── README.md
+
