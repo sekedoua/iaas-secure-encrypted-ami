@@ -20,7 +20,6 @@ Ce référentiel contient le code et les workflows nécessaires pour automatiser
 
 ![Succes](img/Capture3.PNG)
 
-![Succes](img/Capture4.PNG)
 ---
 
 ## ** Structure du dossier  projet **
