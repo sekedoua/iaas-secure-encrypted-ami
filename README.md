@@ -14,12 +14,12 @@ Ce référentiel contient le code et les workflows nécessaires pour automatiser
 - Configure les groupes de sécurité avec un accès restreint.
 - Garantit des volumes racines chiffrés pour les instances EC2.
 - **Entrées personnalisables :** prend en charge les configurations définies par l'utilisateur telles que le type d'instance, l'ID AMI de base et le groupe de sécurité.
-![Succes](img/Capture1.PNG)
+![Succes](img/Capture.PNG)
 
 ![Succes](img/Capture2.PNG)
 
 ![Succes](img/Capture3.PNG)
-
+![Succes](img/Capture4.PNG)
 ---
 
 ## ** Structure du dossier  projet **
