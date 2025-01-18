@@ -23,4 +23,4 @@ Ce référentiel contient le code et les workflows nécessaires pour automatiser
 ├── requirements.txt         # Dépendances Python pour le projet
 ├── secure_ami.py            # Python script to create and validate a secure AMI
 ├── .gitignore               # Fichiers à ignorer dans le contrôle de version
-├── README.md                
+├── README.md

@@ -274,8 +274,3 @@ jobs:
       - name: 🎉 Confirm Workflow Completion
         run: |
           echo "🎉 Secure Encrypted AMI Workflow completed successfully! 🚀"
-          
-
-
-
-
